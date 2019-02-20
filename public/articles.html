@@ -7,23 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Amp It Up">
-  <meta name="keywords" content="Digital Marketing, Blog, Social Media, Online Advertising, Digital Marketing Agency, Jerusalem, Tel Aviv, Israel, Elisha Kramer">
-  <meta name="author" content="Elisha Kramer">
+  <meta name="keywords" content="Digital Marketing, Blog, Social Media, Online Advertising, Digital Marketing Agency, Jerusalem, Tel Aviv, Israel, AV">
+  <meta name="author" content="AV">
 
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-89533787-1', 'auto');
-    ga('send', 'pageview');
-
-  </script>
+ 
 
   <meta name="google-site-verification" content="mXE5fXklRR6u_hpkMSsxaX43Uhs7eEN1g0MivpVumRA" />
   
-  <title>Amp It Up</title>
+  <title>AV Blog</title>
 
   <!-- Bootstrap Core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -80,7 +71,7 @@
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
               </button>
-              <a class="navbar-brand page-scroll" href="index.html">Amp It Up</a>
+              <a class="navbar-brand page-scroll" href="index.html">AV Blog</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -90,10 +81,10 @@
                   <a href="#page-top"></a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#portfolioModal3" class="portfolio-link" data-toggle="modal">Getting Started</b></a>
+                  <a class="page-scroll" href="#portfolioModal3" class="portfolio-link" data-toggle="modal">Entrar con Facebook</b></a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#team"><b>Community Forum</b></a>
+                  <a class="page-scroll" href="#team"><b>Comentarios</b></a>
                 </li>
               </ul>
             </div>
@@ -136,7 +127,7 @@
   <div>
     <br>
   <div class="jumbotron text-center">
-    <h2>Community Forum</h2>
+    <h2>Comentarios</h2>
   </div>
 
   <br>
@@ -156,7 +147,7 @@
 
         <div class="col-sm-2">
 
-        <h2 class="addarticlesheader">Add a new post</h2>
+       <!--<h2 class="addarticlesheader">Añadir nueva publicación</h2> -->
 
         </div>
 
@@ -167,20 +158,20 @@
                         
 
                         <div class="form-group">
-                          <input type="text" class="form-control submissionfield" placeholder="Title" ng-model="name" required></input>
+                          <input type="text" class="form-control submissionfield" placeholder="Título" ng-model="name" required></input>
                         </div>
 
 
                         <div class="form-group">
-                          <input align="left" type="text" class="form-control submissionfieldcomment" placeholder="Comment" ng-model="style" required></input>
+                          <input align="left" type="text" class="form-control submissionfieldcomment" placeholder="Comentario" ng-model="style" required></input>
                         </div>
 
                         <div class="form-group">
-                          <input type="text" class="form-control submissionfield" placeholder="Your Name" ng-model="abv" required></input>
+                          <input type="text" class="form-control submissionfield" placeholder="Nombre" ng-model="abv" required></input>
                         </div>
 
                         <div class="form-group">
-                          <input type="text" class="form-control submissionfield" placeholder="Image URL" ng-model="image" required></input>
+                          <input type="text" class="form-control submissionfield" placeholder="URL de Imagen" ng-model="image" required></input>
                         </div>
 
 
@@ -189,7 +180,7 @@
 
                       </div class="col-md-3">
 
-                       <button type="submit" class="page-scroll btn btn-xl">Add</button>
+                       <button type="submit" class="page-scroll btn btn-xl">Añadir</button>
                       </form>
                 </div>
 
@@ -212,13 +203,13 @@
               <img ui-sref='beer({id: list._id})' class="image-beer" ng-src="{{list.image}}">
               </div>
               
-              Post By: {{list.abv}}
+              Publicado por: {{list.abv}}
               <br>
               <br>
 
-              Rating: {{list.rating}} 
+              Puntuación: {{list.rating}} 
 
-              <button ng-click='increment($index)'>Increase Rating</button>
+              <button ng-click='increment($index)'>Aumentar puntos</button>
 
 <!-- 
 If you want to allow users to delete specific memes - unlikely
@@ -253,57 +244,19 @@ any unwanted posts through your db in heroku - research -->
 </div>
         <!-- <div ui-view></div> -->
 
+ 
 
-
-    <div class="row">
-      <div class="col-md-4 col-sm-6 portfolio-item">
-        <div class="team-member">
-
-          <a href="https://il.linkedin.com/in/elishakramer" target="_blank" class="page-scroll btn btn-xl">LinkedIn Page</a>
-
-          <br>
-          <br>
-
-        </ul>
-      </div>
-    </div>
-
-
-    <div class="col-md-4 col-sm-6 portfolio-item">
-      <div class="team-member">
-
-        <a href="https://www.facebook.com/Alephmarketingpros/" target="_blank" class="page-scroll btn btn-xl">Facebook Page</a>
-
-        <br>
-        <br>
-
-      </ul>
-    </div>
-  </div>
-
-
-  <div class="col-md-4 col-sm-6 portfolio-item">
-    <div class="team-member">
-
-     <a href="https://github.com/ElishaKay" target="_blank" class="page-scroll btn btn-xl">GitHub Page</a>
-
-     <br>
-     <br>
-
-   </div>
- </div>
-
+  
 
  <!-- Contact Section -->
  <section id="contact">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="section-heading">Stay in touch ✌️</h2>
+      
 
 
-
-        <h3 class="section-subheading text-muted">Feel free to send me an email anytime at: <a href="mailto:kramer1346@gmail.com">Kramer1346@Gmail.Com</a></h3>
+       
       </div>
     </div>
 
@@ -311,15 +264,12 @@ any unwanted posts through your db in heroku - research -->
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <span class="copyright">Copyright &copy; Amp It Up 2016</span>
+            <span class="copyright">Copyright &copy; AVF 2017</span>
           </div>
 
           <div class="col-md-4">
             <ul class="list-inline quicklinks">
-              <li><a href="#">Privacy Policy</a>
-              </li>
-              <li><a href="#">Terms of Use</a>
-              </li>
+              
             </ul>
           </div>
         </div>
@@ -344,16 +294,12 @@ any unwanted posts through your db in heroku - research -->
                                    <h2></h2>
                                    
 
-                                   <h3>Welcome, Muchacho!</h3>
+                                   <h3>Bienvenido</h3>
                                    <br>
                 <div align="left">             
-        <p>If you're reading this, then it's official. You've happened to stumble upon one of the internet's best kept secrets.</p>
+        
 
-        <p>At Amp It App, we believe that users should be able to comfortably browse articles and memes. </p>
-
-        <p>Go ahead and add a post to the Community Forum.</p>
-
-        <p>Or, click on the title of any post, and leave some comments.</p>
+        <p>Acceda con Facebook para poder tener un perfil personalizado y guardar sus mensajes y publicaciones.</p>
 
       </div>
 
@@ -368,7 +314,7 @@ any unwanted posts through your db in heroku - research -->
  -->
 
        <button type="button" class="btn btn-primary">
-       <a href="/auth/facebook">Log In with Facebook</a>       
+       <a href="/auth/facebook">Login con Facebook</a>       
        </button>
     
 

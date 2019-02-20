@@ -19,8 +19,6 @@ mongoose.connect('mongodb://heroku_7k35vqj4:vnu689v8glfs9n70hk8v129app@ds341825.
 
 
 
-
-
 var Beer = require("./models/BeerModel");
 var Review= require('./models/ReviewModel');
 
@@ -50,7 +48,7 @@ passport.use(new FacebookStrategy({
     clientSecret: '1d9904d87a3e1b3a0b46692cadcc26ef',
     
     // For development
-    // callbackURL: "http://localhost:8000/auth/facebook/callback",
+    //callbackURL: "http://localhost:8000/auth/facebook/callback",//  QUITAR++++++++++++++
     
     // For Deployment
     callbackURL: "https://avblog.herokuapp.com/auth/facebook/callback",
@@ -118,7 +116,7 @@ app.get('/facebookCanceled', function(req, res) {
 // })
 
 app.get('/', function (req, res) {
-  res.send("You are inside the fullstack project")
+  res.send("Dentro de proyecto")
 });
 
 app.get('/beers', function (req, res) {
