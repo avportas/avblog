@@ -15,7 +15,7 @@ mongoose.Promise = global.Promise;
 
 // For deployment purposes uncomment this line:
 //mongoose.connect(process.env.MONGOLAB_PUCE_URI ||'mongodb://localhost/beers');
-mongoose.connect('mongodb://avallejosdw1_db_user:hf5pjtwafhYlVM7t@clusteravredprogramador.amzgkvr.mongodb.net/avblog?retryWrites=true&w=majority&tls=true');
+mongoose.connect('mongodb+srv://avallejosdw1_db_user:hf5pjtwafhYlVM7t@clusteravredprogramador.amzgkvr.mongodb.net/avblog?retryWrites=true&w=majority&tls=true');
 
 
 
