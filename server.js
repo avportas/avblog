@@ -4,200 +4,124 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var expressSession = require('express-session');
-
+var path = require('path');
 
 mongoose.Promise = global.Promise;
 
-
-// For development purposes, uncomment this line:
-// mongoose.connect('mongodb://localhost/beers');
-
-
-// For deployment purposes uncomment this line:
-//mongoose.connect(process.env.MONGOLAB_PUCE_URI ||'mongodb://localhost/beers');
-mongoose.connect(process.env.NUEVAMONGO);
-
-
+// Conexión a la base de datos
+mongoose.connect(process.env.NUEVAMONGO, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 var Beer = require("./models/BeerModel");
-var Review= require('./models/ReviewModel');
+var Review = require('./models/ReviewModel');
 
 var app = express();
 
-// for fb authenticate
-app.use(expressSession({ secret: 'mySecretKey' }));
+// Para express-session (arregla las advertencias de deprecación)
+app.use(expressSession({ 
+  secret: 'mySecretKey',
+  resave: false,
+  saveUninitialized: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(bodyParser.json());   // This is the type of body we're interested in
-app.use(bodyParser.urlencoded({extended: false}));
+// Servir estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(express.static('public'));
-app.use(express.static('node_modules'));
-
-
-// Change the callbackURL you see below
-// every time that youre developing locally
-// vs deploying to heroku domain
-
+// Estrategia de Facebook
 passport.use(new FacebookStrategy({
-    clientID: '1886152074941466',
-    clientSecret: '1d9904d87a3e1b3a0b46692cadcc26ef',
-    
-    // For development
-    //callbackURL: "http://localhost:8000/auth/facebook/callback",//  QUITAR++++++++++++++
-    
-    // For Deployment
-    callbackURL: "https://avblog.herokuapp.com/auth/facebook/callback",
+    clientID: process.env.FB_CLIENT_ID || '1886152074941466',
+    clientSecret: process.env.FB_CLIENT_SECRET || '1d9904d87a3e1b3a0b46692cadcc26ef',
+    // Cambia esto por tu URL real de Render cuando pruebes Facebook
+    callbackURL: process.env.RENDER_EXTERNAL_URL 
+      ? `${process.env.RENDER_EXTERNAL_URL}/auth/facebook/callback` 
+      : "http://localhost:8000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
-
-    function(accessToken, refreshToken, profile, done) {
-    console.log("accessToken:");
-    console.log(accessToken);
-
-    console.log("refreshToken:");
-    console.log(refreshToken);
-
-    console.log("profile:");
-    console.log(profile);
-
+  function(accessToken, refreshToken, profile, done) {
     return done(null, profile);
   }
 ));
 
-// used to serialize the user for the session
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-// used to deserialize the user
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+// --- RUTAS ---
 
-// To see just the JSON that facebook returns back, 
-// simply uncomment this line
+// Ruta raíz
+app.get('/', function (req, res) {
+  res.send("<h1>¡Servidor de Cervezas Funcionando en Render!</h1>");
+});
 
+// Rutas de Perfil y Autenticación
+app.get('/profile', function(req, res) {
+  res.json(req.user || { msg: "No has iniciado sesión" });
+});
 
-  // route for showing the profile page
-  app.get('/profile', function(req, res) {
-    console.log(req.user);
-    res.render('profile.ejs', {
-      user: req.user // get the user out of session and pass to template
-    });
-  });
-
+app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
     successRedirect : '/profile',
     failureRedirect : '/facebookCanceled'
-  }));
-
-app.get('/profile', function(req, res) {
-  res.json(req.user);
-});
+  })
+);
 
 app.get('/facebookCanceled', function(req, res) {
-  res.send("fail!");
+  res.send("Fallo la autenticación con Facebook");
 });
 
-
-// app.use('/userPage', facebookAuthenticate(req, res, next));
-
-
-// app.get('/userPage', fucntion(req, res){
-//   res.send('userPage.html')
-// })
-
-app.get('/', function (req, res) {
-  res.send("Dentro de proyecto")
-});
-
+// API de Cervezas
 app.get('/beers', function (req, res) {
-
   Beer.find(function (error, beers) {
+    if (error) return res.status(500).send(error);
     res.send(beers);
   });
 });
 
 app.post('/beers', function (req, res, next) {
-  console.log(req.body);
-
   var beer = new Beer(req.body);
-  
   beer.save(function(err, beer) {
     if (err) { return next(err); }
     res.json(beer);
   });
 });
 
-
-
 app.delete('/beers/:id', function (req, res) {
-
-  
-  res.send('DELETE request to homepage');
-
-
   Beer.findByIdAndRemove(req.params.id, function(err) {
-    if (err) throw err;
-
-    // we have deleted the person
-    console.log('Person deleted!');
+    if (err) return res.status(500).send(err);
+    res.send('Person deleted!');
   });
-
-
 });
 
-
 app.post('/beers/:id/reviews/', function(req, res, next) {
-
-// req === {
-//   date: '1/12/16', 
-//   body: {name: "Daniel", text: "gross"},
-//   params: {id: 123}
-// }
-
-// req.params.id === 123
-// req.body === {name: "Daniel", text: "gross"}
-
-// db.beers.findById() cousins with Beer.findById 
-// Beer is the name of the schema, same way we search through a collection
   Beer.findById(req.params.id, function(err, foundBeer) {
-    //foundBeer is the success funct of the beer we found in the database
-    // we create a function within the function because once we
-    // find the beer, we want to create and push a review object
     if (err) { return next(err); }
 
     var review = new Review(req.body);
-
     foundBeer.reviews.push(review);
       
     foundBeer.save(function (err, review) {
       if (err) { return next(err); }
-
       res.json(review);
     });  
   });
 });
 
-
-// fb auth
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+// Escuchar en el puerto de Render
+var PORT = process.env.PORT || 8000;
+app.listen(PORT, function() {
+  console.log('Servidor corriendo en el puerto ' + PORT);
 });
-
-app.get('/auth/facebook', passport.authenticate('facebook'));
-
-
-
-// // For development, uncomment this line
-// app.listen(8000);
-
-app.listen(process.env.PORT || '8000');
