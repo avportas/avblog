@@ -15,7 +15,7 @@ mongoose.Promise = global.Promise;
 
 // For deployment purposes uncomment this line:
 //mongoose.connect(process.env.MONGOLAB_PUCE_URI ||'mongodb://localhost/beers');
-mongoose.connect(process.env-NUEVAMONGO);
+mongoose.connect(process.env.NUEVAMONGO);
 
 
 
